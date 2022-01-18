@@ -1,0 +1,35 @@
+﻿@model CreateMeasureUnitInputModel
+
+@{
+    this.ViewData["Title"] = "Add new measure unit";
+}
+
+
+<div class="section_create">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger col-5 font-weight-bold"></div>
+    <div class="row flex-nowrap text-white-50">
+        
+        <h2 class="text-center"><i class="fas fa-balance-scale"></i> Създай нова мерна единица</h2>
+    </div>
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ShortName"></label>
+            <input asp-for="ShortName" class="form-control" />
+            <span asp-validation-for="ShortName"></span>
+        </div>
+        <button type="submit" class="btn_save  float-right"><i class="far fa-save"></i> Запази</button>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}
+
+
+

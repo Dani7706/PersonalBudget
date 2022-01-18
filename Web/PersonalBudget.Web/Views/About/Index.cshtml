@@ -1,0 +1,53 @@
+﻿
+@{
+    this.ViewData["Title"] = "About";
+}
+<div class="section-all">
+    <h3 class="ml-md-5 mt-3 col-lg-10 ">Направете настройки според вашите нужди:</h3>
+    <div class="row mt-5 justify-content-center">
+        <div class="card-container--about pt-2 offset-1 offset-md-0">
+
+            <a class="nav-text card-link" asp-area="" asp-controller="Towns" asp-action="CreateTown">Градовете</a> ,в които пазарувате.
+        </div>
+
+        <div class="card-container--about pt-2"> <a class="nav-text card-link" asp-area="" asp-controller="FinanceInstitutions" asp-action="Create">Институциите</a> , свързани с движенията на парите ви.</div>
+        <div class="card-container--about pt-2">Вашето <a class="nav-text card-link" asp-area="" asp-controller="Members" asp-action="CreateMember">семейство</a> .</div>
+        <div class="card-container--about pt-2">Вашите <a class="nav-text card-link" asp-area="" asp-controller="Partners" asp-action="CreatePartner">контрагенти</a> продукти и услуги.</div>
+        <div class="card-container--about pt-2"> <a class="nav-text card-link" asp-area="" asp-controller="Categories" asp-action="CreateCategory">Категориите</a> , които на вас ви трябват.</div>
+        <div class="card-container--about pt-2">Вашите <a class="nav-text card-link" asp-area="" asp-controller="Subcategories" asp-action="CreateSubcategory">подкатегории</a> продукти и услуги.</div>
+        <div class="card-container--about pt-2"> <a class="nav-text card-link" asp-area="" asp-controller="Products" asp-action="CreateProduct">Продуктите и услугите</a> ,които вие ползвате.</div>
+        <div class="card-container--about pt-2">Добавете <a class="nav-text card-link" asp-area="" asp-controller="MeasureUnits" asp-action="CreateMeasureUnit">мерни единици</a> .</div>
+
+
+    </div>
+    <h3 class="ml-md-5 mt-3 col-lg-11">Управлявайте финансите по удобен за вас начин:</h3>
+    <div class="row mt-5 justify-content-center">
+        <div class="card-container--about pt-2">
+
+            <a class="nav-text card-link" asp-area="" asp-controller="Transfers" asp-action="Create">Въведете</a> вашите постъпления и разходи.
+        </div>
+
+        <div class="card-container--about pt-2">Проследете всички свои <a class="nav-text card-link" asp-area="Reports" asp-controller="Costs" asp-action="CostsDetails">разходи</a> .</div>
+        <div class="card-container--about pt-2">Проследете <a class="nav-text card-link" asp-area="Reports" asp-controller="CostsBySubcategories" asp-action="CostsDetails">разходите си</a> по подкатегории.</div>
+
+        <div class="card-container--about pt-2">Прегледайте <a class="nav-text card-link" asp-area="Reports" asp-controller="Incomes" asp-action="IncomesDetails">приходите си</a> .</div>
+        <div class="card-container--about pt-2">Прегледайте <a class="nav-text card-link" asp-area="Reports" asp-controller="IncomesBySubcategories" asp-action="IncomesDetails">приходите си</a> по подкатегории.</div>
+
+        <div class="card-container--about pt-2"> Въведете вашия<a class="nav-text card-link" asp-area="" asp-controller="Inventory" asp-action="AddInitialAvailability"> инвентар</a> .</div>
+        <div class="card-container--about pt-2">Проследете <a class="nav-text card-link" asp-area="" asp-controller="Inventory" asp-action="All">наличностите </a> .</div>
+        <div class="card-container--about pt-2"> Бързо и лесно проследете <a class="nav-text card-link" asp-area="" asp-controller="Products" asp-action="CreateProduct">продуктите с изтичащ срок на годност</a> .</div>
+
+
+    </div>
+    <h3 class="text-center mt-3 ">Специални благодарности</h3>
+    <div class="row mt-5  justify-content-center">
+        <div class="card-container--special pt-3">
+            <a href="https://eee.bg/courses/math-for-developers-1" target="_blank">Ники Костов</a> ,<br />
+            благодаря ти, че си страхотен Лектор и страхотен Човек!<br /> Без теб нищо от това нямаше да е реалност!
+        </div>
+
+
+    </div>
+</div>
+
+

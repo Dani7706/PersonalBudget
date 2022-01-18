@@ -1,0 +1,181 @@
+﻿@using PersonalBudget.Data.Models
+@model PersonalBudget.Web.ViewModels.Payments.CreatePaymentInputModel
+
+@{
+    this.Layout = "_CustomLayout";
+    this.ViewData["Title"] = "Create payment";
+
+    var financeInstitutions = Model.FinanceInstitutions.Select(x => new SelectListItem(x.Value, x.Key));
+    var financeTypes = Model.FinanceTypes.Select(x => new SelectListItem(x.Value, x.Key));
+}
+
+
+
+<div class="offset-1">
+    <h2 class="mt-3 text-white-50"><i class="fas fa-money-bill-wave"></i>Създай плащане/получаване на средства</h2>
+
+
+    <form method="post" id="paymentForm">
+        <div class="row">
+            <div class="col-6">
+                <fieldset class="pl-3 pr-3 pt-1 pb-1">
+                    <div class="form-group">
+                        <label asp-for="FinanceTypeId"></label>
+                        <select asp-for="FinanceTypeId" asp-items="financeTypes" class="form-control" id="financeType">
+                            <option selected="">Изберете вид </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FinanceInstitutionId"></label>
+                        <select asp-for="FinanceInstitutionId" asp-items="financeInstitutions" id="financeInstitutions" class="form-control">
+                            <option selected="">Изберете финансова институция</option>
+                        </select>
+                    </div>
+                    <input type="button" onclick="getFinanceInstitutionStartCapital()" value="Зареди начален капитал" class="btn btn-outline-info mb-2" id="show" />
+                    <div class="form-group">
+                        <label asp-for="StartCapital" class="control-label"></label>
+                        <input asp-for="StartCapital" class="form-control" id="startCapital" />
+                        <span asp-validation-for="StartCapital" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaidSum" class="control-label"></label>
+                        <input asp-for="PaidSum" class="form-control" id="paidSum" />
+                        <span asp-validation-for="PaidSum" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FinalCapital" class="control-label"></label>
+                        <input asp-for="FinalCapital" class="form-control" id="finalCapital" onfocus="CalculateFinalCapital()" />
+                        <span asp-validation-for="FinalCapital" class="text-danger"></span>
+                    </div>
+                </fieldset>
+
+
+            </div>
+            <div class="col-6">
+
+                <fieldset class="col-8 pl-3 pr-3 pt-1 pb-1">
+                    <div class="form-group ">
+                        <label>№ трансфер</label>
+                        <input id="transferNumber" class="form-control" asp-for="TransferId" />
+
+                    </div>
+                    <div class="form-group ">
+                        <label asp-for="Type"></label>
+                        <input id="transferType" class="form-control" />
+                        <span asp-validation-for="TransferType" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-5">
+                        <label asp-for="SumToPay"></label>
+                        <input asp-for="SumToPay" class="form-control" id="sumToPay" />
+
+                        <span asp-validation-for="SumToPay" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label asp-for="RemainingSum"> </label>
+                        <input asp-for="RemainingSum" class="form-control" id="remainingSum" onfocus="CalculateRemainingSum()" />
+
+
+                    </div>
+                </fieldset>
+
+            </div>
+
+
+
+
+        </div>
+
+        <div class="form-group offset-8 mt-1 mr-3">
+            <button type="submit" class="btn_save"><i class="fas fa-money-bill-wave"></i> Плати</button>
+        </div>
+
+
+
+
+    </form>
+</div>
+
+
+
+
+@section Scripts {
+
+
+    <script>
+
+        $("#financeType").change(function () {
+            getFinanceInstitutions();
+        });
+        var getFinanceInstitutions = function () {
+             $.ajax({
+            url: '@Url.Action("GetAllFinanceInstitutionsAsJSON", "FinanceInstitutions")',
+            type: 'GET',
+            data: {
+                financeTypeId:$('#financeType').val(),
+            },
+            success: function (data) {
+                $('#financeInstitutions').find('option').remove()
+                $(data).each(
+                    function (index, item) {
+                        $('#financeInstitutions').append('<option value="' + item.id + '">' + item.name + '</option>')
+                    });
+            },
+            error: function () {
+            }
+           });
+        }
+    </script>
+
+    <script>
+        $("#show").click(function () {
+            getFinanceInstitutionStartCapital()
+        });
+        var getFinanceInstitutionStartCapital = function () {
+            $.ajax({
+                url: '@Url.Action("GetFinanceInstitutionStartCapitalAsJSON", "FinanceInstitutions")',
+                type: 'GET',
+                data: {
+                    financeInstitutionId: $('#financeInstitutions').val(),
+                },
+                success: function (returnData) {
+                    var capital = returnData.data
+                    console.log(returnData.capital)
+                    $('#startCapital').val(returnData.capital)
+                },
+                error: function () {
+                }
+            });
+     }
+    </script>
+<script>
+    function CalculateFinalCapital() {
+        var transferType = document.getElementById('transferType')
+        var startCapital = parseFloat((document.getElementById('startCapital').value).replace(/,/g, '.')).toFixed(2);
+        var paidSum =document.getElementById('paidSum').value
+        var finalCapital = document.getElementById('finalCapital');
+        if (transferType.value == 'Плащане') {
+            finalCapital.value = startCapital - paidSum
+        }
+        else
+        {
+            finalCapital.value =parseFloat(startCapital) + parseFloat(paidSum)
+        }
+        
+        console.log(transferType.value);
+    }
+</script>
+    <script>
+        function CalculateRemainingSum() {
+            var sumToPay = parseFloat((document.getElementById('sumToPay').value).replace(/,/g, '.')).toFixed(2);
+            var paidSum =Number.parseFloat(document.getElementById('paidSum').value).toFixed(2);
+            var remainingSum = document.getElementById('remainingSum')
+            remainingSum.value = (sumToPay - paidSum).toFixed(2);
+
+
+        }
+    </script>
+
+}
+

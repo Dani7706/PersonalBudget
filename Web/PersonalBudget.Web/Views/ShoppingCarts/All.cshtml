@@ -1,0 +1,44 @@
+﻿@model PersonalBudget.Web.ViewModels.ShoppingCarts.AllShoppingCartsViewModel
+
+@{
+    this.Layout = "_CustomLayout";
+}
+<div class="section_create">
+    @if (this.TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-success mt-3 mb-5"><i class="fas fa-check-circle"></i> @this.TempData["Message"]</div>
+    }
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Списък за пазаруване</th>
+                <th>Тотал</th>
+                <th>
+                    <form method="get" class="m-0">
+                        <button class="btn_save mt-0" asp-controller="ShoppingCarts" asp-action="NewShoppingCart"><i class="fas fa-plus-circle"></i> Добави</button>
+
+                    </form>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cart in Model.DetailsShoppingCarts)
+            {
+                <tr>
+                    <td>
+
+                        <a asp-controller="ShoppingCarts" asp-action="Details" asp-route-id="@cart.Id" class="text-white-50 text-capitalize">@cart.Name</a>
+                    </td>
+                    <td>@cart.Total</td>
+                    <td>
+                        <form method="post" class="m-0">
+                            <button class="btn_delete" asp-controller="ShoppingCarts" asp-action="Delete" asp-route-cartId="@cart.Id" onclick="return confirm('Сигурен ли сте, че искате да изтриете този списък?');"><i class="far fa-trash-alt"></i> Изтрий</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,40 @@
+﻿@model PersonalBudget.Web.ViewModels.FinanceInstitutions.EditViewModel
+
+
+
+@{
+    this.ViewData["Title"] = "Edit finance institution";
+    var financeTypes = this.Model.FinanceTypes.Select(x => new SelectListItem(x.Value, x.Key));
+}
+<div class="section_create">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger col-4 ml-0 font-weight-bold"></div>
+
+    <h2 class="">Финансова институция</h2>
+    <form method="post" style="margin-top:5em" class="">
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FinanceTypeId"></label>
+            <select asp-for="FinanceTypeId" class="form-control" asp-items="financeTypes">
+                <option selected="">Please choose finance type</option>
+            </select>
+
+            <span asp-validation-for="FinanceTypeName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Capital"></label>
+            <input asp-for="Capital" class="form-control" />
+            <span asp-validation-for="Capital" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn_save  float-right"><i class="far fa-save"></i> Запази</button>
+    </form>
+
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}

@@ -1,0 +1,41 @@
+﻿@import "../typography/settings-mixins.scss";
+@import "../typography/settings-mixins.scss";
+
+footer {
+    grid-area: footer;
+
+    
+}
+.footer {
+    height: 600px;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 30px; /* Vertically center the text there */
+    padding-top:30px;
+    @include for-phone-only{
+        height:700px;
+    }
+    @include for-tablet-landscape-up{
+        height:400px;
+    }
+   @include for-desktop-up{
+       height: 350px; 
+       padding-top:50px;
+   }
+}
+.footer-nav {
+    margin: 110px 0px 0px 0px;
+
+    @include for-phone-only {
+        margin: 130px 0px 0px 0px;
+    }
+
+    @include for-tablet-portrait-up {
+        margin: 180px 0px 0px 0px;
+    }
+
+    @include for-desktop-up {
+        margin: 110px 0px 0px 150px;
+    }
+}

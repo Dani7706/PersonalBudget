@@ -1,0 +1,22 @@
+﻿@model CreateTownInputModel
+@{ 
+    this.ViewData["Title"] = "Add new Town";
+}
+<div class="section_create">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger col-3 font-weight-bold"></div>
+    <h1 class="offset-md-3 text-white-50"><i class="fas fa-city"></i> Добави нов град</h1>
+    <form method="post" >
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Country"></label>
+            <input asp-for="Country" class="form-control" />
+            <span asp-validation-for="Country" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn_save mt-4 float-right"><i class="far fa-save"></i> Запази</button>
+    </form>
+</div>
+

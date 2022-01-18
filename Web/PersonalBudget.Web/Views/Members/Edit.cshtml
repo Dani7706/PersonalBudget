@@ -1,0 +1,25 @@
+﻿@model PersonalBudget.Web.ViewModels.Members.MemberViewModel
+
+@{
+    this.ViewData["Title"] = "Edit member";
+}
+<div class="section_create">
+
+    <h2 class="text-white-50 text-center"><i class="fas fa-house-user"></i> Редактирай</h2>
+    <br />
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger col-5 font-weight-bold"></div>
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <button type="submit" class="btn_save  float-right"><i class="far fa-save"></i> Запази</button>
+
+
+    </form>
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}

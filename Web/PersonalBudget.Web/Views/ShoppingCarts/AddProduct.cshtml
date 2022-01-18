@@ -1,0 +1,60 @@
+﻿@model PersonalBudget.Web.ViewModels.ShoppingCarts.ProductListViewModel
+
+@{
+    this.ViewData["Title"] = "Create shopping cart";
+    this.Layout = "_CustomLayout";
+    var measureUnits = this.Model.MeasureUnits.Select(x => new SelectListItem(x.Value, x.Key));
+}
+<div asp-validation-summary="ModelOnly" class="alert alert-danger col-5 font-weight-bold"></div>
+<div class="section-all--medium">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="ProductName"></label>
+            <input asp-for="ProductName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="MeasureUnitId"></label>
+            <select asp-for="MeasureUnitId" asp-items="measureUnits" class="form-control">
+                <option>Изберете</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="Quantity" ></label>
+            <input asp-for="Quantity" class="form-control" id="qty" placeholder="0.000"/>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" id="price" placeholder="0.00"/>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProductValue"></label>
+            <input asp-for="ProductValue" class="form-control" id="total" onfocus="CalculateTotal()"/>
+        </div>
+        <div >
+            <button type="submit" class="btn_save mr-5"><i class="far fa-save"></i> Запази</button>
+            <button onclick="javascript: return closeWindow();" class="btn_edit">Затвори</button>
+        </div>
+       
+    </form>
+</div>
+
+@section Scripts{
+    <script language="javascript">
+        function closeWindow() {
+            window.opener = self;
+            window.close();
+            document.close();
+
+        }
+    </script>
+    <script>
+        function CalculateTotal() {
+            var qty = parseFloat((document.getElementById('qty').value).replace(/,/g, '.')).toFixed(2);
+            var price = Number.parseFloat(document.getElementById('price').value).toFixed(2);
+            var total = document.getElementById('total')
+            total.value = (qty*price).toFixed(2);
+
+
+        }
+    </script>
+}

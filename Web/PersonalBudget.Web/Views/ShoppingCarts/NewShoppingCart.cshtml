@@ -1,0 +1,35 @@
+﻿@model PersonalBudget.Web.ViewModels.ShoppingCarts.NewShoppingCart
+
+@{
+    this.ViewData["Title"] = "Create shopping cart";
+    this.Layout = "_CustomLayout";
+}
+<div asp-validation-summary="ModelOnly" class="alert alert-danger col-5 font-weight-bold"></div>
+<div class="section_create">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="ShoppingCartName"></label>
+            <input asp-for="ShoppingCartName" class="form-control" />
+            <span asp-validation-for="ShoppingCartName"></span>
+        </div>
+        <div class="float-right">
+            <button type="submit" class="btn_save"><i class="far fa-save"></i> Запази</button>
+            <button onclick="javascript: return closeWindow();" class="btn_edit">Затвори</button>
+
+        </div>
+        
+    </form>
+</div>
+
+@section Scripts{
+    <script language="javascript">
+        function closeWindow() {
+            window.opener = self;
+            window.close();
+            document.close();
+
+        }
+    </script>
+
+}
+

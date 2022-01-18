@@ -1,0 +1,36 @@
+﻿@model SearchViewModel
+
+
+@{
+    var subcategories = this.Model.Subcategories.Select(x => new SelectListItem(x.Value, x.Key));
+}
+
+<div class="section-search">
+    <form method="get" class="mt-3 mb-3 ">
+        <div class="row d-flex justify-content-between">
+            <div class="form-group col-12 col-md-6">
+                <label asp-for="InitialDate"></label>
+                <input asp-for="InitialDate" asp-route-InitialDate="@Model.InitialDate" class="form-control" />
+            </div>
+            <div class="form-group col-12 col-md-6">
+                <label asp-for="FinalDate"></label>
+                <input asp-for="FinalDate" asp-route-FinalDate="@Model.FinalDate" class="form-control" />
+            </div>
+            <div class="form-group col-12 col-md-4">
+                <label asp-for="SubCategoryId"></label>
+                <select asp-for="SubCategoryId" asp-route-subCategoryId="@Model.SubCategoryId" asp-items="subcategories" class="form-control">
+                    <option>Изберете подкатегория</option>
+                </select>
+            </div>
+
+            <div class="form-group col-12 col-md-4">
+                <label asp-for="SearchTerm"></label>
+                <input asp-for="SearchTerm" asp-route-SearchTerm="@Model.SearchTerm" class="form-control" />
+            </div>
+            <div class="form-group mt-lg-4 col-12 col-md-3 ">
+                <button type="submit" class="btn_search"><i class="fas fa-search"></i> Търси</button>
+            </div>
+        </div>
+
+    </form>
+</div>

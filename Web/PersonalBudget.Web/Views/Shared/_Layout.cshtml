@@ -1,0 +1,364 @@
+﻿@using PersonalBudget.Common
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+    <link href="/resources/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <header class="">
+        <nav class="navbar navbar-expand-xl mb-3 navbar-light justify-content-md-center justify-content-lg-around">
+
+            <div class="container-fluid ">
+                <a class="navbar-brand mr-0 ml-1" asp-area="" asp-controller="Home" asp-action="Index"></a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon text-white-50"></span>
+                </button>
+                <div class="navbar-collapse collapse d-xl-inline-flex flex-xl-row-reverse ml-lg-5 pl-lg-5">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1 col-lg-9 col-md-7 justify-content-around">
+                        <li class="nav-item nav-text mt-2">
+                            <a class="  nav-text" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button type="button" class="btn dropdown-toggle  nav-text pl-2 pr-2" id="settingsMenu" data-toggle="dropdown">Продукти</button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="settingsMenu" id="submenu">
+                                    <li role="presentation" class="dropdown-item">
+                                        <a role="menuitem" class="nav-text " asp-area="" asp-controller="Inventory" asp-action="AddInitialAvailability">Добави начална наличност</a>
+                                    </li>
+                                    <li role="presentation" class="dropdown-item">
+                                        <a role="menuitem" class="nav-text " asp-area="" asp-controller="Inventory" asp-action="All">Инвентар</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button type="button" class="btn dropdown-toggle nav-text pl-2 pr-2" id="transferMenu" data-toggle="dropdown">Трансфери</button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="transferMenu" id="submenu">
+                                    <li role="presentation">
+                                        <a role="menuitem" class="nav-text pl-2" asp-controller="Transfers" asp-action="Create">Добави нов</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="menuitem" class="nav-text pl-2" asp-controller="Transfers" asp-action="All">Всички трансфери</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button type="button" class="btn dropdown-toggle nav-text pl-2 pr-2" id="transferMenu" data-toggle="dropdown">Плащания</button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="transferMenu" id="submenu">
+                                    <li role="presentation">
+                                        <a role="menuitem" class="nav-text pl-2" asp-controller="Payments" asp-action="All">Всички</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button type="button" class="btn dropdown-toggle nav-text pl-2 pr-2" id="settingsMenu" data-toggle="dropdown">Вашите настройки</button>
+                                <ul class="dropdown-menu " role="menu" aria-labelledby="settingsMenu" id="submenu">
+
+                                    <li class="dropdown-submenu  dropdown-menu-right">
+                                        <a class="dropdown-item dropdown-toggle nav-text" data-toggle="dropdown">Финансови институции</a>
+                                        <ul class="dropdown-menu " role="menu" aria-labelledby="financeInstitutionsMenu" id="sub-submenu">
+                                            <li role="presentation" class="dropdown-item ">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="FinanceInstitutions" asp-action="Create">Създай нова</a>
+                                            </li>
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="FinanceInstitutions" asp-action="AllFI">Всички</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+
+                                    <li class="dropdown-submenu  dropdown-menu-right">
+
+                                        <a class="dropdown-item dropdown-toggle nav-text" data-toggle="dropdown">Градове</a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="settingsMenu" id="sub-submenu">
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Towns" asp-action="CreateTown">Създай нов</a>
+                                            </li>
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Towns" asp-action="All">Всички градове</a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <li class="dropdown-submenu  dropdown-menu-right">
+                                        <a class="dropdown-item dropdown-toggle nav-text" data-toggle="dropdown">Мерни единици</a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="financeInstitutionsMenu" id="sub-submenu">
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="MeasureUnits" asp-action="CreateMeasureUnit" accesskey="M">Създай нова</a>
+                                            </li>
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="MeasureUnits" asp-action="AllMeasureUnits">Всички</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu  dropdown-menu-right">
+                                        <a class="dropdown-item dropdown-toggle nav-text" data-toggle="dropdown">Категория</a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="financeInstitutionsMenu" id="sub-submenu">
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Categories" asp-action="CreateCategory">Създай нова</a>
+                                            </li>
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Categories" asp-action="All">Всички</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu  dropdown-menu-right">
+                                        <a class="dropdown-item dropdown-toggle nav-text" data-toggle="dropdown">Подкатегория</a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="financeInstitutionsMenu" id="sub-submenu">
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Subcategories" asp-action="CreateSubcategory">Създай нова</a>
+                                            </li>
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Subcategories" asp-action="All">Всички</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu  dropdown-menu-right">
+                                        <a class="dropdown-item dropdown-toggle nav-text" data-toggle="dropdown">Вашето семейство</a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="financeInstitutionsMenu" id="sub-submenu">
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Members" asp-action="CreateMember">Добави</a>
+                                            </li>
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Members" asp-action="AllMembers">Всички</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu  dropdown-menu-right">
+                                        <a class="dropdown-item dropdown-toggle  nav-text" data-toggle="dropdown">Контрагент</a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="financeInstitutionsMenu" id="sub-submenu">
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Partners" asp-action="CreatePartner">Добави нов</a>
+                                            </li>
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Partners" asp-action="All">Всички</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu  dropdown-menu-right">
+                                        <a class="dropdown-item dropdown-toggle  nav-text" data-toggle="dropdown">Продукти и услуги</a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="financeInstitutionsMenu" id="sub-submenu">
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Products" asp-action="CreateProduct">Добави</a>
+                                            </li>
+                                            <li role="presentation" class="dropdown-item">
+                                                <a role="menuitem" class="nav-text" asp-area="" asp-controller="Products" asp-action="All">Всички</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button type="button" class="btn dropdown-toggle nav-text pl-2 pr-2" id="transferMenu" data-toggle="dropdown">Отчети</button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="transferMenu" id="submenu">
+                                    <li role="presentation">
+                                        <a role="menuitem" class="nav-text pl-2" asp-area="Reports" asp-controller="Costs" asp-action="All">Разходи</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="menuitem" class="nav-text pl-2" asp-area="Reports" asp-controller="Incomes" asp-action="All">Приходи</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="menuitem" class="nav-text pl-2" asp-area="Reports" asp-controller="CostsBySubcategories" asp-action="All">Разходи по подкатегории</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="menuitem" class="nav-text pl-2" asp-area="Reports" asp-controller="IncomesBySubcategories" asp-action="All">Приходи по подкатегории</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item mt-2">
+                            <a role="menuitem" class="nav-text " asp-controller="About" asp-action="Index">За приложението</a>
+                        </li>
+                        <li class="nav-item mt-2">
+                            <a class=" nav-text" asp-area="" asp-controller="Contacts" asp-action="Index">Контакти</a>
+                        </li>
+                        
+
+                    </ul>
+
+                </div>
+                <form method="get" class="m-0">
+                    <button class="btn_addToBasket" onclick="javascript: return openShoppingCart()"><i class="fas fa-shopping-cart"></i></button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <partial name="_CookieConsentPartial" />
+
+    @if (this.SignInManager.IsSignedIn(this.User))
+    {
+        <aside>
+            <vc:expire-products></vc:expire-products>
+
+        </aside>
+
+    }
+    <main role="main">
+        @this.RenderBody()
+    </main>
+
+
+
+    <footer class="footer text-muted">
+        
+           
+        <div class="row  section-all--big footer-nav">
+            <div class="col col-lg-2">
+                <p class="footer-p m-0">Инвентар</p>
+                <ul>
+                    <li>
+                        <a role="menuitem" class="footer-link col" asp-area="" asp-controller="Inventory" asp-action="AddInitialAvailability"> начална наличност</a>
+
+                    </li>
+                    <li>
+                        <a role="menuitem" class="footer-link col" asp-area="" asp-controller="Inventory" asp-action="All">Инвентар</a>
+
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col col-lg-2">
+                <p class="footer-p m-0">Трансфер</p>
+                <ul>
+                    <li>
+                        <a role="menuitem" class="footer-link" asp-controller="Transfers" asp-action="Create">Добави</a>
+
+                    </li>
+                    <li>
+                        <a role="menuitem" class="footer-link" asp-controller="Transfers" asp-action="All">Всички</a>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="col col-lg-2">
+                <p class="footer-p m-0">Отчети</p>
+                <ul class="mb-0">
+                    <li>
+                        <a role="menuitem" class="footer-link" asp-area="Reports" asp-controller="Incomes" asp-action="All">Приходи</a>
+                    </li>
+                    <li>
+                        <a role="menuitem" class="footer-link" asp-area="Reports" asp-controller="Costs" asp-action="All">Разходи</a>
+                    </li>
+                    <li>
+                        <a role="menuitem" class="footer-link" asp-area="Reports" asp-controller="IncomesBySubcategories" asp-action="All">Приходи групирани</a>
+                    </li>
+                    <li>
+                        <a role="menuitem" class="footer-link" asp-area="Reports" asp-controller="CostsBySubcategories" asp-action="All">Разходи групирани</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col col-sm-2">
+                <p class="footer-p m-0 ">Други</p>
+                <ul class="mb-0">
+                    <li>
+                        <a role="menuitem" class="footer-link" asp-controller="Payments" asp-action="All">Всички плащания</a>
+                    </li>
+                    <li>
+                        <a role="menuitem" class="footer-link" asp-controller="About" asp-action="Index">За приложението</a>
+
+                    </li>
+                    <li >
+                        <a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col col-12  col-lg-4">
+                <p class="footer-p m-0 text-center">Настройки</p>
+                <div class="row">
+                    <ul class="mb-0 col col-6">
+                        <li>
+                            <a role="menuitem" class="footer-link" asp-area="" asp-controller="FinanceInstitutions" asp-action="AllFI">Финансови институции</a>
+
+                        </li>
+                        <li>
+                            <a role="menuitem" class="footer-link" asp-area="" asp-controller="Towns" asp-action="All">Градове</a>
+                        </li>
+                        <li>
+                            <a role="menuitem" class="footer-link" asp-area="" asp-controller="MeasureUnits" asp-action="AllMeasureUnits" accesskey="M">Мерни единици</a>
+
+                        </li>
+                        <li>
+                            <a role="menuitem" class="footer-link" asp-area="" asp-controller="Members" asp-action="AllMembers">Член на семейството</a>
+
+                        </li>
+                    </ul>
+                    <ul class="col col-6">
+                        <li>
+                            <a role="menuitem" class="footer-link" asp-area="" asp-controller="Partners" asp-action="All">Контрагенти</a>
+
+                        </li>
+                        <li>
+                            <a role="menuitem" class="footer-link" asp-area="" asp-controller="Categories" asp-action="All">Категории</a>
+                        </li>
+                        <li>
+                            <a role="menuitem" class="footer-link" asp-area="" asp-controller="Subcategories" asp-action="All">Подкатегории</a>
+
+                        </li>
+                        <li>
+                            <a role="menuitem" class="footer-link" asp-area="" asp-controller="Products" asp-action="All">Всички продукти/услуги</a>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/custom.js"></script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+
+
+    <script src="https://kit.fontawesome.com/6c28ba2282.js" crossorigin="anonymous"></script>
+    <script language="javascript">
+        function openShoppingCart() {
+            var page = document.open("/ShoppingCarts/All/", 'Page', "width=320, height=500, left=0, top=100");
+
+        }
+    </script>
+    @await this.RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

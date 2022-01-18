@@ -1,0 +1,72 @@
+﻿@model PersonalBudget.Web.ViewModels.Products.AllItemsViewModel
+
+@{
+    this.ViewData["Title"] = "All items";
+    var subcategories = this.Model.SubCategories.Select(x => new SelectListItem(x.Value, x.Key));
+}
+
+<div class="section-search">
+    @if (this.TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-success mt-3 mb-5"><i class="fas fa-check-circle"></i> @this.TempData["Message"]</div>
+    }
+    <form method="get" class="mt-0">
+        <div class="row d-flex justify-content-between">
+            <div class="form-group col-12 col-md-4">
+                <label asp-for="SubCategoryId"></label>
+                <select asp-for="SubCategoryId" asp-items="subcategories" class="form-control">
+                    <option>Изберете подкатегория</option>
+                </select>
+            </div>
+            <div class="form-group col-12 col-md-4">
+                <label asp-for="SearchTerm"></label>
+                <input asp-for="SearchTerm" class="form-control" />
+            </div>
+            <div class="form-group mt-4 col-12 col-md-3">
+                <button type="submit" class="btn_search  float-right"><i class="fas fa-search"></i> Търси</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="section-all">
+    <div class="row justify-content-around mt-3">
+        <h2 class="ml-3"><i class="far fa-list-alt"></i> Списък с продукти/услуги</h2>
+        <form method="get" class="mt-3">
+            <button class="btn btn-primary" asp-controller="Products" asp-action="CreateProduct"><img src="~/resources/add.png" class="icon-add" /> Добави</button>
+        </form>
+    </div>
+
+    <table class="table table-striped table-hover mt-5 table-responsive-sm">
+        <thead>
+            <tr>
+                <th scope="col">Продукт/услуга</th>
+                <th scope="col">Подкатегория</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.SubCategoryName</td>
+                    <td>
+                        <form method="get" class="m-0">
+                            <button class="btn_edit" asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i> Редактирай</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" class="m-0">
+                            <button class="btn_delete" asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt"></i> Изтрий</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<partial name="_PagingPartial" model="@Model"></partial>

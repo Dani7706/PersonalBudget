@@ -1,0 +1,80 @@
+﻿
+@model PersonalBudget.Web.ViewModels.Products.CreateProductInputModel
+
+
+@{
+    this.ViewData["Title"] = "Create product";
+    var subCategories = this.Model.SubCategories.Select(x => new SelectListItem(x.Value, x.Key));
+}
+
+
+
+    <div class="section_create">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger col-6 font-weight-bold"></div>
+        <h2 class="text-white-50">
+            <i class="far fa-list-alt"></i> Добави продукт/услуга
+        </h2>
+        <form method="post">
+
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubCategoryId" class="control-label"></label>
+                <select id="subcategories" asp-for="SubCategoryId" asp-items="subCategories" class="form-control">
+                    <option>Моля изберете подкатегория</option>
+                </select>
+                <span asp-validation-for="SubCategoryId" class="text-danger"></span>
+
+            </div>
+            <div class="form-group mt-5 d-flex justify-content-end">
+                <button type="submit" class="btn_save  float-right"><i class="far fa-save"></i> Запази</button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+@section Scripts {
+
+
+    <script language="javascript">
+        function openSubCategoryWindow() {
+            var categoryPage = window.open('/Subcategories/CreateSubcategory/', 'Page', "width=1000, height=500")
+            categoryPage.focus();
+            return false;
+
+        }
+
+    </script>
+    <script>
+        function RefreshData() {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById('subcategories').innerHTML = ''
+                    var subCategories = JSON.parse(this.responseText)
+                    for (var i = 0; i < subCategories.length; i++) {
+                        var subCategory = subCategories[i];
+                        document.getElementById('subcategories').innerHTML +=
+                            '<option value=" ' + subCategory.key + '">' + subCategory.value + '</option>'
+                    }
+
+                    console.log(subCategories);
+                }
+            }
+            xhr.open("GET", '/Subcategories/GetAllSubCategoriesAsJSON');
+            xhr.send();
+
+        }
+    </script>
+    
+
+    <partial name="_ValidationScriptsPartial" />
+
+}
+

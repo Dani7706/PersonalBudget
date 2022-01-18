@@ -1,0 +1,68 @@
+﻿@model PersonalBudget.Web.ViewModels.Records.ExpireProductComponentViewModel
+
+<div class="section-expireProducts">
+    <h5 class="nav-text">продукти с изтичащ срок на годност</h5>
+    <button class="btn" style=" background-color: lightpink;width:100px" id="show" onclick="javascript: return Show();">Покажи </button>
+    <button class="btn" style="display: none; width: 130px; background-color: lightcoral" id="hide" onclick="javascript: return Hide();">Скрий </button>
+
+</div>
+<div class="scrolable-container  text-white-50 mt-3" id="table" style="font-size:12px;visibility:hidden">
+
+    <table class="table table-striped text-white-50">
+        <thead class="expire-products">
+            <tr>
+                <th scope="col">Продукт</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Срок на годност</th>
+            </tr>
+        </thead>
+        <tbody >
+            @foreach (var product in Model.ExpireProducts)
+            {
+                <tr>
+                    <td>@product.ItemName</td>
+                    <td>@product.Quantity @product.MeasureUnitShortName</td>
+                    <td>@product.ExpireDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script language="javascript">
+    var table = document.getElementById('table')
+    var show = document.getElementById('show')
+    var hide = document.getElementById('hide')
+    function Show() {
+
+        table.style.visibility = 'visible'
+        table.style.display = 'block'
+        show.style.display = "none"
+        hide.style.display = "block"
+        hide.style.visibility = 'visible'
+    }
+</script>
+<script language="javascript">
+    var table = document.getElementById('table')
+
+    function Hide() {
+        table.style.display = 'none'
+        hide.style.display = "none"
+        show.style.display = "block"
+        show.style.visibility = 'visible'
+    }
+</script>
+<script language="javascript">
+    var table = document.getElementById('table')
+
+    function Hidden() {
+        table.style.display = 'none'
+        table.style.visibility = 'invisible'
+    }
+</script>
+
+@section Scripts{
+
+
+}
+

@@ -1,0 +1,28 @@
+﻿@model PersonalBudget.Web.ViewModels.Products.EditViewModel
+
+@{
+    this.ViewData["Title"] = "Edit item";
+    var subcategories = this.Model.SubCategories.Select(x => new SelectListItem(x.Value, x.Key));
+}
+<div class="section_create">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger font-weight-bold"></div>
+    <h2 class="text-white-50 ml-3 ml-md-5"><i class="far fa-list-alt"></i> Редактирай</h2>
+    <form method="post">
+        <div class="form-group mb-5">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SubCategoryId"></label>
+            <select asp-for="SubCategoryId" asp-items="subcategories" class="form-control">
+                <option>Изберете подкатегория</option>
+            </select>
+        </div>
+        <button type="submit" class="btn_save float-right mt-5"><i class="far fa-save"></i> Запази</button>
+    </form>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}

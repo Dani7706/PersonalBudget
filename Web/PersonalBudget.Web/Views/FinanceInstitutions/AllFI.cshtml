@@ -1,0 +1,61 @@
+﻿@model PersonalBudget.Web.ViewModels.FinanceInstitutions.AllFinanceInstitutionsViewModel
+
+@{
+    this.ViewData["Title"] = "All finance institutions";
+    int i = 1;
+}
+<div class="section-all">
+    @if (this.TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-success"><i class="fas fa-check-circle"></i> @this.TempData["Message"]</div>
+    }
+<div class="row justify-content-between mt-5 mb-5">
+    <h2 class="m-0 ml-4"><i class="fas fa-landmark"></i> Всички финансови институции</h2>
+    <form method="get" class="mt-0">
+        <button class="btn btn-primary" asp-controller="FinanceInstitutions" asp-action="Create" onclick=""><img src="~/resources/add.png" class="icon-add"/> Добави нова</button>
+    </form>
+</div>
+    
+    <table class="table table-striped table-responsive text-white-50">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Име</th>
+                <th scope="col">Тип</th>
+                <th scope="col">Начален капитал</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var financeInstitution in Model.FinanceInstitutions)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@financeInstitution.Name</td>
+                    <td>@financeInstitution.FinanceTypeName</td>
+                    <td>@financeInstitution.Capital</td>
+                    <td>
+                        <form method="get" asp-action="Edit" asp-route-id="@financeInstitution.Id" class="mt-0">
+                            <button class="btn_edit"><i class="fas fa-edit"></i> Редактирай</button>
+
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" asp-action="Delete" id="deleteForm" asp-route-id="@financeInstitution.Id" class="mt-0">
+                            <button class="btn_delete" data-id="@financeInstitution.Id" onclick="return confirm('Сигурен ли сте, че искате да изтриете тази институция?');"><i class="far fa-trash-alt"></i> Delete</button>
+                        </form>
+
+                    </td>
+
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+
+</div>
+
+
+
+

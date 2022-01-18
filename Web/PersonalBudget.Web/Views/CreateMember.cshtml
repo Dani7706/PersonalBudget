@@ -1,0 +1,24 @@
+﻿@model PersonalBudget.Web.ViewModels.Partners.CreatePartnerInputModel 
+
+@{
+    this.ViewData["Title"] = "Create member";
+    var towns = Model.Towns.Select(x => new SelectListItem(x.Value, x.Key));
+}
+
+<div class="col-md-4 offset-4">
+    <h2>@this.ViewData["Title"]</h2>
+    <br />
+    <form  method="post">
+        <div class="form-group">
+            <label asp-for="Name">Name</label>
+            <input asp-for="Name"/>
+        </div>
+        <div class="form-group">
+            <label asp-for="TownId">Town</label>
+            <select asp-for="TownId" asp-items="towns">
+                <option>Select town</option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary offset-4"/>
+    </form>
+</div>

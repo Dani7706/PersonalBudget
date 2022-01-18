@@ -1,0 +1,41 @@
+﻿@model AllMeasureUnits 
+
+@{
+    this.ViewData["Title"] = "All measure units";
+    int i = 1;
+}
+
+<div class="section-all">
+    @if (this.TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-success"><i class="fas fa-check-circle"></i> @this.TempData["Message"]</div>
+    }
+<div class="section_title">
+    <h2 class="text-white-50"><i class="fas fa-balance-scale"></i> Всички мерни единици</h2>
+    <form method="get" class="m-0">
+        <button class="btn btn-primary" asp-controller="MeasureUnits" asp-action="CreateMeasureUnit"><img src="~/resources/add.png" class="icon-add"/> Добави</button>
+    </form>
+
+</div>
+
+    <table class="table table-striped mt-5">
+        <thead>
+            <tr class="text-white-50">
+                <th scope="col">#</th>
+                <th scope="col">Кратко наименование</th>
+                <th scope="col">Пълно наименование</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var measureunit in Model.MeasureUnits)
+            {
+                <tr class="text-white-50">
+                    <td>@i</td>
+                    <td>@measureunit.ShortName</td>
+                    <td>@measureunit.Name</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+</div>

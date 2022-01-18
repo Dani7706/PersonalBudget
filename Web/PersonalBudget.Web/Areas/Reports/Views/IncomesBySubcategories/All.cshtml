@@ -1,0 +1,44 @@
+﻿@model PersonalBudget.Web.Areas.Reports.Models.AllCostsViewModel;
+
+@{
+    this.ViewData["Title"] = "Приходи и разходи";
+}
+<div class="section-all">
+    <form method="get" class="mt-3 mb-3 ">
+        <div class="row d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="InitialDate"></label>
+                <input asp-for="InitialDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="FinalDate" placeholder="месец/ден/година"></label>
+                <input asp-for="FinalDate" class="form-control" placeholder="месец/ден/година"/>
+            </div>
+
+            <div class="form-group mt-lg-4">
+                <input type="submit" class="btn btn-primary mt-2" value="Търси" />
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="section-all">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Подкатегория</th>
+                <th>Стойност</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AllCosts)
+            {
+                <tr>
+                    <td>@item.SubcategoryName</td>
+                    <td>@((decimal)item.ItemValue)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

@@ -1,0 +1,23 @@
+﻿@model TownViewModel
+@{
+    this.ViewData["Title"] = "Edit Town";
+}
+<div class="section_create">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger col-3 font-weight-bold"></div>
+    <h1 class=""><i class="fas fa-city"></i> Редактирай град</h1>
+    <form method="post" class="">
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Country"></label>
+            <input asp-for="Country" class="form-control" />
+            <span asp-validation-for="Country" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn_save  float-right"><i class="far fa-save"></i> Запази</button>
+    </form>
+</div>
+
+

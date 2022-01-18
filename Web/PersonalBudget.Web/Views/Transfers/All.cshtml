@@ -1,0 +1,70 @@
+﻿@model AllTransfersViewModel
+
+@{
+    this.ViewData["Title"] = "All transfers";
+    var partners = this.Model.Partners.Select(x => new SelectListItem(x.Value, x.Key));
+}
+@if (this.TempData.ContainsKey("Message"))
+{
+    <div class="alert alert-success mt-3 mb-5"><i class="fas fa-check-circle"></i> @this.TempData["Message"]</div>
+}
+<div class="section-all--medium">
+    <h2 class="d-flex justify-content-center text-white-50 mt-0 mb-4">Всички трансфери</h2>
+    <form method="get" class="mt-3 mb-3 ">
+        <div class="row d-flex justify-content-between">
+            <div class="form-group col-12 col-md-4">
+                <label asp-for="PartnerId"></label>
+                <select asp-for="PartnerId" asp-items="partners" class="form-control">
+                    <option>Изберете контрагент</option>
+                </select>
+            </div>
+            <div class="form-group col-12 col-md-4">
+                <label asp-for="ItemsPerPage"></label>
+                <select asp-for="ItemsPerPage" class="form-control">
+                    <option selected="selected">Изберете брой</option>
+                    <option>2</option>
+                    <option>4</option>
+                    <option>6</option>
+                </select>
+
+            </div>
+            <div class="form-group col-12 col-md-4">
+                <label asp-for="SearchTerm"></label>
+                <input asp-for="SearchTerm" class="form-control" />
+            </div>
+            <div class="form-group mt-lg-4 col-12 col-md-3">
+                <button type="submit" class="btn_search"><i class="fas fa-search"></i> Търси</button>
+            </div>
+        </div>
+
+    </form>
+    <div class="row mb-3 justify-content-between">
+        @foreach (var transfer in Model.Transfers)
+        {
+            <div class="card mb-4" style="width: 18rem; background: linear-gradient(90deg, #D66D75 0%, #E29587 100%) ">
+
+
+                <div class="card-body">
+                    <h5 class="card-title text-center">@transfer.Id @transfer.PartnerName</h5>
+                    @if (transfer.TransferType.ToString() == "Income")
+                    {
+                        <h6 class="card-subtitle mb-2 text-muted text-center" id="type"> Доход</h6>
+                    }
+                    else
+                    {
+                        <h6 class="card-subtitle mb-2 text-muted text-center" id="type">Плащане</h6>
+                    }
+                    <p class="card-text">Дата: @transfer.TransferDate.ToShortDateString()</p>
+                    <p class="card-text">Общо сума: @transfer.TotalMoney</p>
+                    <p class="card-text">Платена сума: @transfer.PaidSum</p>
+                    <p class="card-text">Оставаща сума за плащане: @transfer.RemainingAmount</p>
+                    <a class="card-link d-flex justify-content-end" asp-controller="Transfers" asp-action="ById" asp-route-id="@transfer.Id">Детайли</a>
+
+                </div>
+            </div>
+        }
+    </div>
+    <partial name="_PagingPartial" model="@Model" />
+
+</div>
+

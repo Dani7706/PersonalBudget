@@ -1,0 +1,61 @@
+﻿@model AllTownsViewModel
+@{
+    this.ViewData["Title"] = "All towns";
+    int i = 1;
+}
+
+<div class="section-all">
+    @if (this.TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-success"><i class="fas fa-check-circle"></i> @this.TempData["Message"]</div>
+    }
+    <div class="section_title justify-content-between">
+        <h2 class=" text-center text-white mb-5 mt-5"><i class="fas fa-city"></i> Всички градове</h2>
+        <form method="get" class="pt-0 mt-5">
+            <button class="btn btn-primary" asp-controller="Towns" asp-action="CreateTown"><img src="~/resources/add.png" class="icon-add" /> Добави</button>
+        </form>
+
+    </div>
+    <table class="table table-striped table-hover table-responsive-sm ">
+        <thead class="">
+            <tr class="">
+                <th scope="col">#</th>
+                <th scope="col">Град</th>
+                <th scope="col">Държава</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody class="col-12">
+            @foreach (var town in Model.Towns)
+            {
+                <tr class="">
+                    <td>@i</td>
+                    <td>@town.Name</td>
+                    <td>@town.Country</td>
+                    <td class="pl-0 pr-0">
+                        <form method="get" class="m-0">
+                            <button class="btn_edit" asp-controller="Towns" asp-action="Edit" asp-route-id="@town.Id"><i class="fas fa-edit"></i> Редактирай</button>
+
+                        </form>
+                    </td>
+                    <td class="pl-0 pr-0">
+                        <form method="post" class="mt-0 m-0">
+                            <button class="btn_delete" asp-controller="Towns" asp-action="Delete" asp-route-id="@town.Id" onclick="return confirm('Сигурен ли сте, че искате да изтриете този град?');"><i class="far fa-trash-alt"></i> Изтрий</button>
+
+                        </form>
+                    </td>
+                </tr>
+                i++;
+            }
+
+
+        </tbody>
+    </table>
+
+
+</div>
+<partial name="_PagingPartial" model="@Model" />
+
+
+

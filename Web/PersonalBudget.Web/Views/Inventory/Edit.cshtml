@@ -1,0 +1,21 @@
+﻿@model PersonalBudget.Web.ViewModels.Inventory.EditViewModel
+
+@{
+    this.ViewData["Title"] = "Edit initial availability";
+}
+
+<div class="section_create">
+    <div>
+        <h2 class="text-white-50">Редактирай</h2>
+        <partial name="_InventoryFormPartial" model="@Model">
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+

@@ -1,0 +1,17 @@
+﻿@import "../typography/settings-colors.scss";
+
+.p-big {
+    color:$pink;
+    font-size:22px;
+    font-weight:bold;
+    font-family:'Open Sans';
+    margin:30px;
+    }
+
+p {
+    color: $pink;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Open Sans';
+    margin: 10px;
+}

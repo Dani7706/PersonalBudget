@@ -1,0 +1,1 @@
+.main{display:grid;grid-template-rows:auto auto}@media (min-width: 1200px){.main{grid-template-columns:300px 1fr}}.section_wrapper{width:335px;margin:0 auto;height:100%;display:grid;justify-items:center;justify-content:center}

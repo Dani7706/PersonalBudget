@@ -1,0 +1,66 @@
+﻿@model PersonalBudget.Web.ViewModels.ShoppingCarts.DetailsShoppingCartViewModel
+
+@{
+    this.Layout = "_CustomLayout";
+
+}
+@if (this.TempData.ContainsKey("Message"))
+{
+    <div class="alert alert-success mt-3 mb-5"><i class="fas fa-check-circle"></i> @this.TempData["Message"]</div>
+}
+<div class=" float-right mb-5 ">
+
+    <h4 class="ml-3 mr-3 text-capitalize">Списък: @Model.Name</h4>
+    <h4 class="ml-3 mr-3">Тотал: @Model.Total</h4>
+
+    <form method="get" class="m-0 ml-3">
+        <button class="btn_save m-0" asp-controller="ShoppingCarts" asp-action="All"> Към всички </button>
+
+    </form>
+</div>
+
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>Продукт</th>
+            <th>К-во</th>
+            <th>Цена</th>
+            <th>Ст-ст</th>
+            <th></th>
+            <th>
+                <form method="get" class="m-0">
+                    <button class="btn_save-cart m-0" asp-controller="ShoppingCarts" asp-action="AddProduct" asp-route-id="@Model.Id"><i class="fas fa-plus-circle"></i></button>
+
+                </form>
+            </th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+
+        @foreach (var product in Model.ProductLists)
+        {
+            <tr>
+                <td>@product.ProductName</td>
+                <td>@product.Quantity @product.MeasureUnitShortName</td>
+                <td>@product.UnitPrice</td>
+                <td>@product.ItemValue</td>
+                <td><input type="checkbox"/></td>
+                <td>
+
+
+                    <form method="post" class="m-0">
+
+                        <button class="btn_delete-cart" asp-controller="ProductLists" asp-action="Delete" asp-route-productId="@product.Id" asp-route-cartId="@Model.Id" asp-route-itemValue="@product.ItemValue"><i class="far fa-trash-alt"></i> </button>
+
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+

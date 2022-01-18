@@ -1,0 +1,48 @@
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@model PersonalBudget.Web.ViewModels.ContactFormViewModel;
+
+@{
+    this.TempData["Title"] = "Изпратете ни съобщение";
+}
+<div class="section-all">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Content"></label>
+            <textarea asp-for="Content" class="form-control"></textarea>
+            <span asp-validation-for="Content"></span>
+        </div>
+        <p>
+            Натискайки бутона "Изпратете ни съобщение", вие потвърждавате, че сте запознати и съгласни с нашата
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">политика за опазване на личните данни</a>
+        </p>
+        <input type="hidden" id="RecaptchaValue" name="RecaptchaValue"/>
+        <button type="submit" class="btn_save float-right">Изпратете ни съобщение</button>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:Key"]"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@this.Configuration["GoogleReCaptcha:Key"]', { action: 'contact_form' }).then(function (token) {
+                document.getElementById("RecaptchaValue").value = token;
+            });
+        });
+    </script>
+}

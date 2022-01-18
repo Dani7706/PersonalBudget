@@ -1,0 +1,218 @@
+﻿@model EditTransferViewModel
+
+@{
+    this.ViewData["Title"] = "Edit transfer";
+    var partners = this.Model.Partners.Select(x => new SelectListItem(x.Value, x.Key));
+    var rows = this.Model.Records.Count();
+
+}
+<div class="section-all--big">
+
+
+    <form method="post">
+        <div class="row col-12 col-md-10 ml-lg-4 mr-4">
+            <div class="form-group float-right mr-0">
+                <label asp-for="TotalMoney"></label>
+                <input type="hidden" id="calculate" value="@Model.Records.Sum(x=>double.Parse(x.ItemValue,System.Globalization.CultureInfo.InvariantCulture))" />
+                <input type="number" step="any" lang="nb" asp-for="TotalMoney" class="form-control mr-4" id="totalValue" onfocus="CalculateTotal()" />
+                <span asp-validation-for="TotalMoney" class="text-danger"></span>
+                <br />
+            </div>
+        </div>
+        
+        <div class="row  ml-1 mr-4">
+            <fieldset class="col-12 col-md-10 justify-content-between ml-lg-5 pb-4">
+                <legend class="ml-2 col-6 col-lg-2 text-white-50">Данни</legend>
+
+                <div class="row">
+                    <div class="form-group col-lg-2 col-12 m-0">
+                        <label asp-for="Type"></label>
+                        <select asp-for="Type" class="form-control" id="type" asp-items="Html.GetEnumSelectList<TransferType>()">
+                            <option selected="">Изберете вид трансфер</option>
+                        </select>
+
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-2 col-12 m-0">
+                        <label asp-for="Id"></label>
+                        <input type="number" asp-for="Id" id="transferNumber" class="form-control" />
+
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-3 col-12 m-0">
+                        <label asp-for="PartnerId"></label>
+                        <select asp-for="PartnerId" class="form-control" asp-items="Model.Partners.Select(x=>new SelectListItem(x.Value,x.Key))">
+                            <option selected="">Изберете контрагент</option>
+                        </select>
+
+                        <span asp-validation-for="PartnerId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-5 col-12 m-0">
+                        <label asp-for="TransferDate"></label>
+                        <input type="datetime-local" asp-for="TransferDate" class="form-control" />
+                        <span asp-validation-for="TransferDate" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </fieldset>
+
+        </div>
+
+
+        @foreach (var record in Model.Records)
+        {
+
+
+
+            <div class="row ml-1 mr-4">
+                <fieldset class="col-12 col-lg-10 col-md-10 justify-content-between ml-lg-5 pb-2">
+                    <legend class="ml-2 col-6 col-lg-2 text-white-50">Запис</legend>
+                    <div class="row">
+                        <div class="form-group col-12 col-lg-4">
+                            <label asp-for="@record.SubCategoryId" class="control-label"></label>
+                            <select class="form-control" asp-for="@record.SubCategoryId" asp-items="@record.Subcategories.Select(x=>new SelectListItem(x.Value,x.Key))" id="subcategory">
+                                <option selected="">Изберете подкатегория</option>
+                            </select>
+                            <span asp-validation-for="@record.SubCategoryId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-12 col-lg-4">
+                            <label asp-for="@record.ItemId" class="control-label"></label>
+                            <select class="form-control" asp-for="@record.ItemId" asp-items="@record.Items.Select(x=>new SelectListItem(x.Value,x.Key))" id="item">
+                                <option selected="">Изберете продукт</option>
+                            </select>
+                            <span asp-validation-for="@record.ItemId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-12 col-lg-4">
+                            <label asp-for="@record.MemberId" class="control-label"></label>
+                            <select class="form-control" asp-for="@record.MemberId" asp-items="@record.Members.Select(x=>new SelectListItem(x.Value,x.Key))" id="member">
+                                <option selected="">Изберете потребител</option>
+                            </select>
+                            <span asp-validation-for="@record.MemberId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-2 col-12">
+                            <label asp-for="@record.Quantity" class="control-label"></label>
+                            <input type="number" step="any" lang="nb" asp-for="@record.Quantity" class="form-control quantity" id="quantity" />
+                            <span asp-validation-for="@record.Quantity" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-12 col-lg-2">
+                            <label asp-for="@record.MeasureUnitId" class="control-label"></label>
+                            <select class="form-control" asp-for="@record.MeasureUnitId" asp-items="@record.MeasureUnits.Select(x=>new SelectListItem(x.Value,x.Key))" id="measureUnit">
+                            </select>
+                            <span asp-validation-for="@record.MeasureUnitId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-2 col-12">
+                            <label asp-for="@record.UnitPrice" class="control-label"></label>
+                            <input type="number" step="any" inputmode="numeric" lang="nb" asp-for="@record.UnitPrice" class="form-control unitPrice" id="unitPrice" />
+                            <span asp-validation-for="@record.UnitPrice" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-2 col-12">
+                            <label asp-for="@record.ItemValue" class="control-label"></label>
+                            <input type="text" step="any" lang="nb" asp-for="@record.ItemValue" class="form-control itemValue" onfocus="Calculate()" id="itemValue" />
+                            <span asp-validation-for="@record.ItemValue" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-4 col-12">
+                            <label asp-for="@record.ExpireDate" class="control-label"></label>
+                            <input asp-for="@record.ExpireDate" class="form-control" id="expireDate" />
+                            <span asp-validation-for="@record.ExpireDate" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <a class="btn_edit float-right mb-2 text-center pt-2" asp-controller="Records" asp-action="Edit" asp-route-recordId="@record.Id">
+                        <i class="fas fa-edit"></i> Редактирай
+                    </a>
+
+
+                </fieldset>
+
+            </div>
+            <div>
+
+            </div>
+        }
+
+    <div class="form-group col-lg-10 col-md-10 mt-3  mr-5 ml-md-0 ml-lg-5">
+        <button class="btn_edit" asp-controller="Transfers" asp-action="ById" asp-route-id="@Model.Id">Към справката</button>
+        <button type="submit" class="btn_save float-right mt-0 "><i class="far fa-save"></i> Запази</button>
+
+    </div>
+    </form>
+</div>
+@section Scripts{
+
+
+    <script>
+        function Calculate() {
+            var itemValue = document.getElementById('itemValue')
+            var quantity = document.getElementById('quantity');
+            var unitPrice = document.getElementById('unitPrice');
+            itemValue.value = (quantity.value * unitPrice.value).toFixed(2);
+
+        }
+    </script>
+    <script>
+        function TotalRecords() {
+
+            var totalRecords = document.getElementById('recordsCount');
+            var unitPrice = document.getElementsByClassName('unitPrice');
+
+            totalRecords.value = unitPrice.length;
+        }
+    </script>
+    <script>
+        function CalculateTotal() {
+            var total = document.getElementById('totalValue');
+
+            var calculate = document.getElementById('calculate').value
+            calculate = calculate.replace(/,/g, '.')
+            total.value = parseFloat(calculate).toFixed(2)
+            console.log(calculate)
+            console.log(total.value)
+        }
+    </script>
+
+    <script>
+        var index = 0;
+        function AddToRecords() {
+            var subCategory = document.getElementById('subcategory');
+            var subCategoryText = subCategory.options[subCategory.selectedIndex].text;
+            var item = document.getElementById('item');
+            var itemText = item.options[item.selectedIndex].text;
+            var member = document.getElementById('member');
+            var memberText = member.options[member.selectedIndex].text;
+            var quantity = document.getElementById('quantity');
+            var measureUnit = document.getElementById('measureUnit');
+            var measureUnitText = measureUnit.options[measureUnit.selectedIndex].text;
+            var unitPrice = document.getElementById('unitPrice');
+            var itemValue = document.getElementById('itemValue');
+            var expireDate = document.getElementById('expireDate');
+
+            $("#records").append("<tr><td><input style='width: 50px' type='hidden' value=\'" + subCategory.value + "\' name='Records[" + index + "].SubCategoryId'  /><input value=\'" + subCategoryText + "\'> </td><td><input style='width: 50px' type='hidden' value=\'" + item.value + "\' name='Records[" + index + "].ItemId'/><input value=\'" + itemText + "\'> </td><td><input style='width: 50px' type='hidden' name='Records[" + index + "].MemberId' value=\'" + member.value + "\'/><input value=\'" + memberText + "\'> </td><td><input style='width: 100px' type='text'step='any' lang='nb' name='Records[" + index + "].Quantity' value=\'" + quantity.value + "\'/></td><td><input style='width: 50px' type='hidden' name='Records[" + index + "].MeasureUnitId' value=\'" + measureUnit.value + "\'/><input value=\'" + measureUnitText + "\'> </td><td><input style='width: 100px' type='text' step='any' lang='nb' value=\'" + unitPrice.value + "\' name='Records[" + index + "].UnitPrice'/></td><td><input style='width: 100px' type='text' step='any' lang='nb' name='Records[" + index + "].ItemValue' value=\'" + itemValue.value + "\'/></td><td><input type='datetime - local' name='Records[" + index + "].ExpireDate' value=\'" + expireDate.value + "\'/></td></tr>");
+            index++;
+
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#expireDate')({
+                dateFormat: "dd/mm/yy",
+                showStatus: true,
+                showWeeks: true,
+                currentText: 'Now',
+                autoSize: true,
+                gotoCurrent: true,
+                showAnim: 'blind',
+                highlightWeek: true
+            });
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+
+
+

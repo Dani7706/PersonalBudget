@@ -1,0 +1,13 @@
+﻿@model PersonalBudget.Web.ViewModels.FinanceInstitutions.CreateFinanceInstitutionInputModel
+
+
+@{
+    this.ViewData["Title"] = "Add new finance institution";
+    var financeTypes = this.Model.FinanceTypes.Select(x => new SelectListItem(x.Value, x.Key));
+}
+<partial name="_FinanceInstitutionPartialView" model="@Model" />
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}

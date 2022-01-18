@@ -1,0 +1,15 @@
+﻿@import "../typography/settings-mixins.scss";
+
+aside {
+    grid-area: sidebar;
+    grid-column:1/1;
+    grid-row:2/3;
+    @include for-tablet-landscape-up {
+        grid-column: 1 /1;
+        overflow-y:hidden;
+       
+      
+    }
+    overflow:hidden;
+    
+}

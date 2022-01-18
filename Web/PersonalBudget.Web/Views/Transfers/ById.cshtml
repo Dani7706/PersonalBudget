@@ -1,0 +1,149 @@
+﻿@model SingleTransferViewModel
+
+@{
+    this.ViewData["Title"] = "Transfer" + Model.Id;
+    var payments = this.Model.Payments.Count();
+    
+}
+
+<div class="section-all">
+    @if (this.TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-success mt-3 mb-5"><i class="fas fa-check-circle"></i> @this.TempData["Message"]</div>
+    }
+    <div class="card m-0 table-responsive" style="height: 650px; background: linear-gradient(90deg, #D66D75 0%, #E29587 100%) ">
+
+
+        <div class="card-body m-1">
+            <h5 class="card-title text-center" id="transferNumber">@Model.Id</h5>
+            <h5 class="card-title text-center">@Model.PartnerName</h5>
+            @if (@Model.TransferType.ToString() == "Income")
+            {
+                <h6 class="card-subtitle mb-2 text-muted text-center" id="type"> Доход</h6>
+            }
+            else
+            {
+                <h6 class="card-subtitle mb-2 text-muted text-center" id="type">Плащане</h6>
+            }
+
+            <p class="card-text">Дата: @Model.TransferDate</p>
+            <div class="row ml-1">
+                <p>Общо сума: </p>
+                <p class="card-text" id="totalValue">@Model.TotalMoney.ToString()</p>
+            </div>
+
+            <p class="card-text">Платена сума: @Model.PaidSum</p>
+            <div class="row ml-1">
+                <p>Оставаща сума за плащане: </p>
+                <p class="card-text" id="remainingSum"> @Model.RemainingAmount.ToString()</p>
+            </div>
+
+            @if (payments > 0)
+            {
+                <table class="table table-hover  table-striped mt-5 mb-5 table-responsive">
+                    <thead>
+                        <tr class="text-white-50">
+                            <th scope="col">Дата</th>
+                            <th scope="col">Финансова институция</th>
+                            <th scope="col">Начален капитал</th>
+                            <th scope="col">Платена сума</th>
+                            <th scope="col">Оставащ капитал</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var payment in Model.Payments)
+                        {
+                            <tr>
+                                <td class="card-text"> @payment.CreatedOn</td>
+                                <td class="card-text"> @payment.FinanceInstitutionName</td>
+                                <td class="card-text">@payment.StartCapital</td>
+                                <td class="card-text">@payment.PaidSum</td>
+                                <td class="card-text">@payment.FinalCapital</td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+
+            }
+            else
+            {
+                <p class="text-danger">There aren't any payments</p>
+            }
+        <div class="row d-flex justify-content-around mb-3">
+            <button type="button" class="btn_search" onclick="javascript: return openPaymentWindow();"><i class="fas fa-money-bill-wave"></i> Плати</button>
+            <form method="get" class="m-0">
+                <button class="btn_save mt-0" asp-controller="Transfers" asp-action="Details" asp-route-id="@Model.Id"><i class="fas fa-info-circle"></i> Детайли</button>
+
+            </form>
+            <form method="get" class="m-0">
+                <button class="btn_edit" asp-controller="Transfers" asp-action="Edit" asp-route-id="@Model.Id"><i class="fas fa-edit"></i> Редактирай</button>
+
+            </form>
+            <form method="post" class="m-0" asp-action="Delete" id="deleteForm" asp-route-id="@Model.Id">
+                <button class="btn_delete" data-toggle="modal" data-target="#deleteModal" data-id="@Model.Id" id="deleteForm" onclick="return confirm('Сигурен ли сте, че искате да изтриете този трансфер?');"><i class="far fa-trash-alt"></i> Изтрий</button>
+
+            </form>
+            <form method="get" class="m-0">
+                <button class="btn_search" asp-controller="Transfers" asp-action="All"><i class="far fa-list-alt"></i> Всички</button>
+
+            </form>
+        </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script language="javascript">
+
+        var paymentPage;
+        var transferNumber = document.getElementById('transferNumber').innerHTML;
+        var remainingSum = document.getElementById('remainingSum').innerHTML;
+        var type = document.getElementById('type');
+        function openPaymentWindow() {
+
+            paymentPage = window.open('/Payments/CreatePayment/', 'Page', "width=800, height=800");
+            paymentPage.onload = function () {
+                var transfNum = paymentPage.document.getElementById('transferNumber')
+                transfNum.value = transferNumber;
+
+                var sumToPay = paymentPage.document.getElementById('sumToPay')
+                sumToPay.value = remainingSum.replace(/,/g, '.');
+                var transferType = paymentPage.document.getElementById('transferType');
+                transferType.value = type.innerHTML
+            }
+            
+            paymentPage.focus();
+            console.log(remainingSum);
+            console.log(parseFloat(remainingSum).toFixed(2))
+            return false;
+
+        }
+
+    </script>
+    <script>
+        var path_to_delete;
+
+        $(".deleteForm").click(function (e) {
+            path_to_delete = $(this).data('path');
+        });
+
+       
+    </script>
+}
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal" aria-labelledby="deleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Do you want to delete ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Yes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

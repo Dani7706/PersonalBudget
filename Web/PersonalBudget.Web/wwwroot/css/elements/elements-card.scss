@@ -1,0 +1,49 @@
+﻿@import "../typography/settings-colors.scss";
+
+.card-background {
+    background-image:url("../../resources/Card-background.png");
+    background-size:cover;
+}
+.card-heading{
+    font-size:18px;
+}
+.card-p{
+    font-size:12px;
+}
+.card-link{
+    font-size:12px;
+    font-weight:bold;
+}
+.card-container {
+    width: 150px;
+    height: 100px;
+    text-align:center;
+    align-items:center;
+    justify-content:center;
+    background-color:lightcoral;
+    border-radius:10px;
+    margin:10px;
+}
+.card-container--special {
+    width: 250px;
+    height: 200px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: lightcoral;
+    border-radius: 10px;
+    margin: 10px;
+}
+.card-container--about {
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: lightcoral;
+    border-radius: 10px;
+    margin: 10px;
+}
+.card-container a{
+    color:$pink;
+}

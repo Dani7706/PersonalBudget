@@ -1,0 +1,109 @@
+﻿@import "../typography/settings-mixins.scss";
+.main{
+    display:grid;
+    grid-template-rows:auto auto;
+    @include for-desktop-up{
+        grid-template-columns:300px 1fr;
+    }
+}
+.section_wrapper {
+    width: 80vw;
+    margin: 0 auto;
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    justify-content: center;
+
+    @include for-desktop-up {
+        width:50vw;
+        margin:10vw;
+    }
+}
+.section-search {
+    width: 90vw;
+    margin: 0 auto;
+
+    @include for-desktop-up {
+        width: 800px;
+        margin-left: 250px;
+    }
+}
+.section-paging {
+    width: 80%;
+    margin: 0 auto;
+    margin-top:50px;
+    @include for-desktop-up {
+        width: 60%;
+        margin-left: 250px;
+    }
+}
+.section-all {
+    width: 90vw;
+    margin: 0 auto;
+    @include for-desktop-up {
+        width: 800px;
+        margin-left: 250px;
+    }
+}
+.section-all--big {
+    width: 90vw;
+
+    @include for-desktop-up {
+        width: 80vw;
+    }
+}
+.section-all--medium {
+    width: 80vw;
+
+    @include for-desktop-up {
+        width: 50vw;
+        margin-left: 200px;
+    }
+}
+.section_index {
+    width: 70vw;
+    margin: 0 auto;
+    height: 450px;
+    display: grid;
+    @include for-desktop-up {
+        width: 45vw;
+        margin-left:250px;
+    }
+}
+.section-index_signedIn {
+    width: 70vw;
+    margin: 0 auto;
+    height: 80%;
+    z-index:0;
+    @include for-desktop-up {
+        width: 45vw;
+        margin: 5vw;
+        margin-left:250px;
+        height:60%;
+    }
+}
+.section_create {
+    width: 80vw;
+    margin: 0 auto;
+
+    @include for-desktop-up {
+        width: 40vw;
+        margin-left: 20vw;
+        margin-top: 10px;
+    }
+}
+.section_title{
+    display:flex;
+}
+.section-expireProducts{
+    display:grid;
+    grid-template-columns:50% 50%;
+    grid-column-gap:10px;
+    margin-left:30px;
+}
+.section-transform{
+    transform:rotate(90deg);
+    @include for-desktop-up{
+        
+    }
+}

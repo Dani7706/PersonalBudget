@@ -1,0 +1,18 @@
+﻿@model PersonalBudget.Web.ViewModels.Home.HomePageViewModel
+
+@{
+    this.ViewData["Title"] = "Home Page";
+}
+
+
+
+<div class="section_index p-0 mt-5  text-center ">
+    <div  class="card-background pt-4 pl-1 pr-1">
+        <h2 class="text-danger">Добре дошли в MyBudget</h2>
+        <p class="">Можете лесно да управлявате парите си, да следите за какво и как изразходвате доходите си.</p>
+        <p class="">Имате възможност да следите наличностите на продукти.Така няма да изхвърляте такива с изтекъл срок на годност или пък да забравите да закупите продукт, който ви е необходим.</p>
+        <p class="">За да използвате програмата трябва да сте влезли в <a asp-area="Identity" asp-controller="Account" asp-action="Login">профила</a>  си.</p>
+        <p class="">Ако все още нямате <a asp-area="Identity" asp-controller="Account" asp-action="Register">акаунт</a> .</p>
+        <p class="">Повече <a asp-controller="About" asp-action="Index">информация</a> .</p>
+    </div>
+</div>

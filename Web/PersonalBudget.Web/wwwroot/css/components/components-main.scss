@@ -1,0 +1,14 @@
+﻿@import "../typography/settings-mixins.scss";
+
+main {
+    grid-area: main;
+    grid-column:1/1;
+    grid-row:3/4;
+    margin:0 auto;
+    margin-top:50px;
+    width:100%;
+    @include for-desktop-up {
+        grid-column: 2 /3;
+        grid-row:2/3;
+    }
+}

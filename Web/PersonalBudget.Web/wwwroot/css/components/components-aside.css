@@ -1,0 +1,1 @@
+aside{grid-area:sidebar;grid-column:1/1;grid-row:2/3;overflow:hidden}@media (min-width: 900px){aside{grid-column:1 /1;overflow-y:hidden}}

@@ -1,0 +1,22 @@
+﻿namespace PersonalBudget.Web.ViewModels.Towns
+{
+    using System.ComponentModel.DataAnnotations;
+
+    using static PersonalBudget.Data.DataConstants.Town;
+
+    public class CreateTownInputModel
+    {
+        [Required(ErrorMessage = "Въведете име на град")]
+        [StringLength(MaxNameLength, ErrorMessage = "Градът трябва да е между {2} и {1} символа", MinimumLength = MinNameLength)]
+        [MinLength(MinNameLength)]
+        [MaxLength(MaxNameLength)]
+        [Display(Name = "Град")]
+        public string Name { get; set; }
+
+        [StringLength(MaxNameLength, ErrorMessage = "Страната трябва да е между {2} и {1} символа", MinimumLength = MinNameLength)]
+        [MinLength(MinNameLength)]
+        [MaxLength(MaxNameLength)]
+        [Display(Name = "Страна")]
+        public string Country { get; set; }
+    }
+}

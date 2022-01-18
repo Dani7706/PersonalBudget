@@ -1,0 +1,45 @@
+﻿@import "../typography/settings-colors.scss";
+@import "../typography/settings-mixins.scss";
+#submenu {
+    background-color: palevioletred;
+    width: 300px;
+    top: auto;
+    left: 150px;
+    position: fixed;
+
+    @include for-desktop-up {
+        left: 0px;
+        position:absolute;
+    }
+}
+
+.dropdown-menu {
+    background-color: palevioletred;
+    width: 300px;
+    top: auto;
+    left: 100px;
+    position:absolute;
+    @include for-desktop-up{
+        left:0px;
+    }
+}
+
+#sub-submenu {
+    left: 150px;
+    background-color: palevioletred;
+    top:auto;
+    position:absolute;
+    @include for-desktop-up{
+        left:250px;
+    }
+}
+
+.navbar-collapse ul {
+    width: 200px;
+    background-color: $navbar;
+    margin-left: 0px;
+
+    @include for-desktop-up {
+        background-color: transparent;
+    }
+}
