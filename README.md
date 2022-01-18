@@ -1,0 +1,2 @@
+PersonalBudget is an app to help people manage money and products the way they want to be.
+PersonalBudget gives an option everyone to create your own categories, subcategories, list of products, institutions, members, partners and measure units. With PersonalBudget can easily watch products with expiring date. With PersonalBudget can easily watch where you spent your money and how much is every cost from all costs and from all incomes. Everyone can see only the data that he/she created!
