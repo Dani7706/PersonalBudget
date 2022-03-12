@@ -1,4 +1,4 @@
-﻿namespace PersonalBudget.Web.Controllers
+﻿ namespace PersonalBudget.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
 

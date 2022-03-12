@@ -85,6 +85,7 @@
             services.AddTransient<IProductListService, ProductListService>();
             services.AddTransient<ICostsBySubcategoriesService, CostsBySubcategoriesService>();
             services.AddTransient<IIncomesBySubcategoriesService, IncomesBySubcategoriesService>();
+            services.AddTransient<IIncomesCostsService, IncomesCostsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

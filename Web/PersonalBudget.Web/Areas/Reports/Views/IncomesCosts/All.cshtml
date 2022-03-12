@@ -1,0 +1,45 @@
+﻿@model PersonalBudget.Web.Areas.Reports.Models.IncomesCosts.AllIncomesCostsViewModel
+@{
+    this.ViewData["Title"] = "IncomeCosts";
+}
+<div class="section-all">
+    <table class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>месец</th>
+                <th>приход</th>
+                <th>разход</th>
+                <th>разлика</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AllIncomesCosts)
+            {
+                <tr>
+                    <td>@item.Month</td>
+                    <td>@item.TotalIncomes</td>
+                   
+                    <td>@item.TotalCosts</td>
+                    <td>@item.Difference</td>
+                </tr>
+                <tr>
+                    @foreach (var income in item.AllIncomesByMember)
+                    {
+                        <td>@income.MemberName</td>
+                        <td>@income.ItemValue</td>
+                    }
+                </tr>
+                <tr>
+                    @foreach (var cost in item.AllCostsByMember)
+                    {
+                        <td>@cost.MemberName</td>
+                        <td>@cost.ItemValue</td>
+                    }
+                </tr>
+               
+            }
+
+        </tbody>
+    </table>
+   
+</div>
