@@ -1,45 +1,85 @@
 ﻿@model PersonalBudget.Web.Areas.Reports.Models.IncomesCosts.AllIncomesCostsViewModel
 @{
     this.ViewData["Title"] = "IncomeCosts";
+    var maxSize = 0;
 }
 <div class="section-all">
+    <form method="get" class="mt-0">
+        <div class="row d-flex justify-content-between">
+            <div class="form-group col-12 col-md-4">
+                <label asp-for="CurrentYear"></label>
+                <input asp-for="CurrentYear" class="form-control"  />
+            </div>
+            
+            <div class="form-group mt-4 col-12 col-md-3">
+                <button type="submit" class="btn_search  float-right"><i class="fas fa-search"></i> Търси</button>
+            </div>
+        </div>
+
+    </form>
+
     <table class="table table-striped table-responsive">
-        <thead>
-            <tr>
-                <th>месец</th>
-                <th>приход</th>
-                <th>разход</th>
-                <th>разлика</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.AllIncomesCosts)
-            {
+        @foreach (var item in Model.AllIncomesCosts)
+        {
+            <thead>
+                <tr>
+                    <th>месец</th>
+                    <th>приход</th>
+                    <th>разход</th>
+                    <th>разлика</th>
+                </tr>
+            </thead>
+            <tbody>
+
                 <tr>
                     <td>@item.Month</td>
                     <td>@item.TotalIncomes</td>
-                   
+
                     <td>@item.TotalCosts</td>
                     <td>@item.Difference</td>
                 </tr>
+            </tbody>
+            <thead>
                 <tr>
-                    @foreach (var income in item.AllIncomesByMember)
-                    {
-                        <td>@income.MemberName</td>
-                        <td>@income.ItemValue</td>
-                    }
+                    <th>потребител</th>
+                    <th>приход</th>
+                    <th>разход</th>
+                    <th>разлика</th>
                 </tr>
-                <tr>
-                    @foreach (var cost in item.AllCostsByMember)
-                    {
-                        <td>@cost.MemberName</td>
-                        <td>@cost.ItemValue</td>
-                    }
-                </tr>
-               
-            }
+            </thead>
+            <tbody>
+                @{ maxSize = Math.Max(item.AllIncomesByMember.Count, item.AllCostsByMember.Count); }
+                @for (var i = 0; i < maxSize; i++)
+                {
 
-        </tbody>
+                    var member = "0";
+                    var income = 0.0;
+                    if (i < item.AllIncomesByMember.Count)
+                    {
+                        member = item.AllIncomesByMember[i].MemberName;
+                        income = item.AllIncomesByMember[i].ItemValue;
+                    }
+
+                <tr>
+                    <td>@member</td>
+                    <td>@income</td>
+                    @if (i < item.AllCostsByMember.Count)
+                    {
+                        <td>@item.AllCostsByMember[i].MemberName</td>
+                        <td>@item.AllCostsByMember[i].ItemValue</td>
+                    }
+
+                </tr>
+
+
+                }
+
+                <tr><th>Niki</th><td>@item.NikiToPay</td></tr>
+
+
+
+            </tbody>
+        }
     </table>
-   
+
 </div>

@@ -89,8 +89,10 @@
 
         public decimal TotalIncomes(string userId)
         {
+            int month = DateTime.Now.Month;
+            int year = DateTime.Now.Year;
             var totalIncomeSum = this.transferRepository.AllAsNoTracking()
-   .Where(x => x.UserId == userId & x.TransferType == TransferType.Income & x.TransferDate.Month == DateTime.Now.Month)
+   .Where(x => x.UserId == userId & x.TransferType == TransferType.Income & x.TransferDate.Month == month & x.TransferDate.Year==year)
    .Select(x => x.TotalMoney)
    .Sum();
             return totalIncomeSum;

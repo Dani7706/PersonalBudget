@@ -21,14 +21,16 @@ namespace PersonalBudget.Web.Areas.Reports.Controllers
             this.incomesCostsService = incomesCostsService;
         }
 
-       public IActionResult All()
+       public IActionResult All([FromQuery] AllIncomesCostsViewModel allIncomesCostsViewModel)
         {
             string userId = this.User.GetId();
-            var model = new AllIncomesCostsViewModel
+            int currentYear = allIncomesCostsViewModel.CurrentYear;
+            allIncomesCostsViewModel.AllIncomesCosts = this.incomesCostsService.GetAll(userId,currentYear );
+  /*          var model = new AllIncomesCostsViewModel
             {
-                AllIncomesCosts = this.incomesCostsService.GetAll(userId),
-            };
-            return this.View(model);
+                AllIncomesCosts = ,
+            };*/
+            return this.View(allIncomesCostsViewModel);
         }
     }
 }

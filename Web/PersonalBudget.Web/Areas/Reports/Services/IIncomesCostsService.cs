@@ -8,10 +8,10 @@ namespace PersonalBudget.Web.Areas.Reports.Services
 {
     public interface IIncomesCostsService
     {
-        List<IncomeCostsViewModel> GetAll(string userId);
+        List<IncomeCostsViewModel> GetAll(string userId, int currentYear);
 
-        List<CostViewModel> AllCostsByMember(string userId, int month);
+        List<CostViewModel> AllCostsByMember(string userId, int month, int currentYear);
 
-        List<CostViewModel> AllIncomesByMember(string userId, int month);
+        List<CostViewModel> AllIncomesByMember(string userId, int month, int currentYear);
     }
 }

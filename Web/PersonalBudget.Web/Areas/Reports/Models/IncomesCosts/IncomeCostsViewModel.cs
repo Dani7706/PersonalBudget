@@ -22,5 +22,7 @@ namespace PersonalBudget.Web.Areas.Reports.Models
         public List<CostViewModel> AllCostsByMember { get; set; }
 
         public List<CostViewModel> AllIncomesByMember { get; set; }
+
+        public double NikiToPay { get; set; }
     }
 }
